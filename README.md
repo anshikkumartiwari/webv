@@ -5,31 +5,7 @@
 
 ---
 
-## Features
-
-- Launch full websites directly from terminal
-- Enter search queries and it auto-searches Google
-- Minimalist, elegant interface
-- Back, forward, refresh, and info buttons
-- Keyboard shortcuts:
-  - Ctrl + L: Focus the URL bar
-  - Ctrl + R: Reload page
-  - Alt + ← / Alt + →: Back / Forward
-- Auto-fallback to google.com if no URL/query is provided
-
----
-
-## How it works
-
-- `webv` checks if your input is a valid URL
-  - If yes → opens it
-  - If no → assumes it’s a Google search
-- GUI opens in a clean GTK window using WebKitGTK 4.1
-- Info button shows shortcut help
-
----
-
-## Install via APT (Recommended)
+## Install via APT
 
 You can install `webv` directly from the custom APT repo.
 
@@ -57,6 +33,31 @@ webv              # opens https://www.google.com by default
 ```
 
 ---
+
+## Features
+
+- Launch full websites directly from terminal
+- Enter search queries and it auto-searches Google
+- Minimalist, elegant interface
+- Back, forward, refresh, and info buttons
+- Keyboard shortcuts:
+  - Ctrl + L: Focus the URL bar
+  - Ctrl + R: Reload page
+  - Alt + ← / Alt + →: Back / Forward
+- Auto-fallback to google.com if no URL/query is provided
+
+---
+
+## How it works
+
+- `webv` checks if your input is a valid URL
+  - If yes → opens it
+  - If no → assumes it’s a Google search
+- GUI opens in a clean GTK window using WebKitGTK 4.1
+- Info button shows shortcut help
+
+---
+
 
 ## Dependencies
 
