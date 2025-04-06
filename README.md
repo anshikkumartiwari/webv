@@ -37,9 +37,12 @@ Run the following commands:
 
 ```bash
 echo "deb [trusted=yes] https://anshikkumartiwari.github.io/webv stable main" | sudo tee /etc/apt/sources.list.d/webv.list
+```
+```bash
 sudo apt update
 sudo apt install webv
 ```
+
 
 ---
 
@@ -48,6 +51,12 @@ sudo apt install webv
 ```bash
 webv https://wikipedia.org
 webv what's the weather today
+webv              # opens https://www.google.com by default
+```
+```bash
+webv https://wikipedia.org
+```
+```bash
 webv              # opens https://www.google.com by default
 ```
 
