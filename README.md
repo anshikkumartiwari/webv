@@ -1,7 +1,6 @@
-
 # webv — Minimal Terminal-to-GUI Web Launcher
 
-`webv` is a lightweight(8KB), terminal-based web launcher built using GTK3 + WebKitGTK 4.1 and C language. Run it from your terminal and get instant GUI browsing — no clutter, just pure speed and utility.
+`webv` is a lightweight(8kb package size), terminal-based web launcher built using GTK3 + WebKitGTK 4.1 and C language. Run it from your terminal and get instant GUI browsing — no clutter, just pure speed and utility.
 
 ---
 
@@ -16,7 +15,6 @@ echo "deb [trusted=yes] https://anshikkumartiwari.github.io/webv stable main" | 
 sudo apt update
 sudo apt install webv
 ```
-
 
 ---
 
@@ -58,6 +56,11 @@ webv              # opens https://www.google.com by default
 
 ---
 
+## Screenshot
+
+![Screenshot](annotely_image%20(1).png)
+
+---
 
 ## Dependencies
 
@@ -93,4 +96,3 @@ MIT License
 ---
 
 Project Website: https://anshikkumartiwari.github.io/webv
-```
