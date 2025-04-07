@@ -1,17 +1,195 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>webv APT Repo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>webv — Minimal Terminal-to-GUI Web Launcher</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #121212;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        a { color: #bb86fc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: auto;
+            padding: 2rem 1rem;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            color: #b0b0b0;
+        }
+
+        .subheading {
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem; /* Slightly reduced bottom margin */
+            text-align: left; /* Left align text */
+            width: 100%; /* Occupy same width constraint */
+            max-width: 600px; /* Match command box max-width */
+            padding-left: 0.2rem; /* Optional: slight indent */
+        }
+         .commands-group > .subheading:first-of-type {
+             margin-top: 0;
+         }
+
+        .commands-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            width: 100%;
+        }
+
+        .cmd-box {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1.2rem;
+            padding-right: 3.5rem;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.95rem;
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+        }
+
+        .cmd-box:hover {
+            background: #2a2a2a;
+            border-color: #555;
+        }
+
+        .cmd-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #d0d0d0;
+        }
+
+        .cmd-box .copy-icon {
+            width: 1.1rem;
+            height: 1.1rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            fill: #a0a0a0;
+            transition: fill 0.2s ease, transform 0.15s ease;
+        }
+        .cmd-box:hover .copy-icon {
+           fill: #e0e0e0;
+        }
+        .copy-icon.copied {
+           fill: #bb86fc;
+           transform: scale(0.9);
+        }
+
+        .screenshot {
+            margin: 2.5rem 0;
+            padding: 0.5rem;
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            display: block;
+            border-radius: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 <body>
-  <h1>Welcome to the webv APT Repository 👋</h1>
-  <p>You can install <strong>webv</strong> on any Debian-based system using:</p>
-  <pre>
-echo "deb [trusted=yes] https://anshikkumartiwari.github.io/webv stable main" | sudo tee /etc/apt/sources.list.d/webv.list
+    <div class="container">
+        <h1>webv</h1>
+        <p>Minimal Terminal-to-GUI Web Launcher for any Debian based Operating System (Ubuntu, Kali Linux, Raspberry Pi OS, MX Linux, Parrot OS).</p>
+
+        <div class="commands-group">
+            <h2 class="subheading">Installation</h2>
+            <div class="cmd-box install-box" data-cmd="echo &quot;deb [trusted=yes] https://anshikkumartiwari.github.io/webv stable main&quot; | sudo tee /etc/apt/sources.list.d/webv.list && sudo apt update && sudo apt install webv">
+                <pre>echo "deb [trusted=yes] https://anshikkumartiwari.github.io/webv stable main" | sudo tee /etc/apt/sources.list.d/webv.list </br>
 sudo apt update
-sudo apt install webv
-  </pre>
-  <p><a href="dists/stable/main/binary-amd64/webv_1.0.0_amd64.deb">Download .deb manually</a></p>
+sudo apt install webv</pre>
+                <svg class="copy-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            </div>
+
+            <h2 class="subheading">Usage</h2>
+            <div class="cmd-box" data-cmd="webv https://wikipedia.org">
+                <pre>webv https://wikipedia.org</pre>
+                <svg class="copy-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            </div>
+            <div class="cmd-box" data-cmd="webv what's the weather today">
+                <pre>webv what's the weather today</pre>
+                <svg class="copy-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            </div>
+             <div class="cmd-box" data-cmd="webv">
+                <pre>webv</pre>
+                <svg class="copy-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            </div>
+        </div>
+
+        <div class="screenshot">
+            <img src="https://raw.githubusercontent.com/anshikkumartiwari/webv/main/annotely_image%20(1).png" alt="webv in action">
+        </div>
+    </div>
+
+    <footer>
+        &copy; <a href="https://anshiikumartiwari.github.io">Anshik Kumar Tiwari</a>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.copy-icon').forEach(icon => {
+            icon.addEventListener('click', e => {
+                const targetIcon = e.currentTarget;
+                if (targetIcon.classList.contains('copied')) {
+                    return;
+                }
+                const cmd = targetIcon.closest('.cmd-box').getAttribute('data-cmd');
+                navigator.clipboard.writeText(cmd).then(() => {
+                    targetIcon.classList.add('copied');
+                    setTimeout(() => {
+                         targetIcon.classList.remove('copied');
+                    }, 1200);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
