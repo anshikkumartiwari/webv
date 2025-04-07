@@ -26,7 +26,7 @@ sudo apt install webv
 webv https://wikipedia.org
 ```
 ```bash
-webv https://wikipedia.org
+webv what's the weather toady
 ```
 ```bash
 webv              # opens https://www.google.com by default
