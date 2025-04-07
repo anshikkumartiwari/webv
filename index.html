@@ -28,6 +28,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
 
         h1 {
@@ -46,11 +47,11 @@
             font-size: 1.5rem;
             color: #e0e0e0;
             margin-top: 2rem;
-            margin-bottom: 0.75rem; /* Slightly reduced bottom margin */
-            text-align: left; /* Left align text */
-            width: 100%; /* Occupy same width constraint */
-            max-width: 600px; /* Match command box max-width */
-            padding-left: 0.2rem; /* Optional: slight indent */
+            margin-bottom: 0.75rem;
+            text-align: left;
+            width: 100%;
+            max-width: 600px;
+            padding-left: 0.2rem;
         }
          .commands-group > .subheading:first-of-type {
              margin-top: 0;
@@ -117,6 +118,14 @@
             border: 1px solid #333;
             border-radius: 8px;
             display: inline-block;
+            width: 100%;
+            max-width: 600px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot:hover {
+            transform: scale(0.99);
         }
 
         .screenshot img {
@@ -124,13 +133,76 @@
             display: block;
             border-radius: 4px;
         }
+        
+        .image-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .image-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup-image-container {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .popup-image {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .close-button {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: background-color 0.2s ease;
+        }
+        
+        .close-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
         .github-box {
             cursor: pointer;
             justify-content: center;
             padding-left: 1rem;
             padding-right: 1rem;
             transition: background 0.2s, transform 0.2s;
+            width: 100%;
+            max-width: 600px;
         }
+        
         .github-box:hover {
             background: #2a2a2a;
             transform: scale(0.98);
@@ -156,7 +228,6 @@
         .github-box:hover .github-icon {
             fill: #bb86fc;
         }
-
 
         footer {
             text-align: center;
@@ -208,9 +279,13 @@ sudo apt install webv</pre>
                 <span>View on GitHub</span>
             </div>
         </div>
+    </div>
 
-
-        
+    <div class="image-popup-overlay" id="imagePopup">
+        <div class="popup-image-container">
+            <button class="close-button">&times;</button>
+            <img class="popup-image" src="" alt="webv in action (enlarged)">
+        </div>
     </div>
 
     <footer>
@@ -220,6 +295,7 @@ sudo apt install webv</pre>
     <script>
         document.querySelectorAll('.copy-icon').forEach(icon => {
             icon.addEventListener('click', e => {
+                e.stopPropagation();
                 const targetIcon = e.currentTarget;
                 if (targetIcon.classList.contains('copied')) {
                     return;
@@ -234,6 +310,37 @@ sudo apt install webv</pre>
                     console.error('Failed to copy text: ', err);
                 });
             });
+        });
+        
+        const screenshot = document.querySelector('.screenshot');
+        const popup = document.getElementById('imagePopup');
+        const popupImage = document.querySelector('.popup-image');
+        const closeButton = document.querySelector('.close-button');
+        
+        screenshot.addEventListener('click', () => {
+            const imgSrc = screenshot.querySelector('img').src;
+            popupImage.src = imgSrc;
+            popup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeButton.addEventListener('click', () => {
+            popup.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        popup.addEventListener('click', (e) => {
+            if (e.target === popup) {
+                popup.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && popup.classList.contains('active')) {
+                popup.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     </script>
 </body>
