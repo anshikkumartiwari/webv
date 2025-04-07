@@ -47,7 +47,7 @@
             font-size: 1.5rem;
             color: #e0e0e0;
             margin-top: 2rem;
-            margin-bottom: 1rem; /* Consistent spacing for all headings */
+            margin-bottom: 1rem;
             text-align: left;
             width: 100%;
             max-width: 600px;
@@ -198,7 +198,7 @@
             transition: background 0.2s, transform 0.2s;
             width: 100%;
             max-width: 600px;
-            margin-top: 1rem; /* Consistent spacing */
+            margin-top: 1rem;
         }
         
         .github-box:hover {
@@ -299,15 +299,13 @@ sudo apt install webv</pre>
                 const cmdBox = copyIcon.closest('.cmd-box');
                 const cmd = cmdBox.getAttribute('data-cmd');
                 
-                // Change the path of the SVG to a check mark
                 copyIcon.innerHTML = '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>';
-                copyIcon.style.fill = '#bb86fc'; // Change to purple color
+                copyIcon.style.fill = '#bb86fc';
                 
                 navigator.clipboard.writeText(cmd).then(() => {
-                    // After 1.5 seconds, change back to the copy icon
                     setTimeout(() => {
                         copyIcon.innerHTML = '<path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>';
-                        copyIcon.style.fill = ''; // Reset to default color
+                        copyIcon.style.fill = '';
                     }, 1500);
                 }).catch(err => {
                     console.error('Failed to copy text: ', err);
