@@ -1,4 +1,4 @@
-# webv — Minimal Terminal-to-GUI Web Launcher for any DEbian based Operating System
+# webv — Minimal Terminal-to-GUI Web Launcher for any Debian based Operating System
 
 `webv` is a lightweight(8kb package size), terminal-based web launcher built using GTK3 + WebKitGTK 4.1 and C language. Run it from your terminal and get instant GUI browsing — no clutter, just pure speed and utility.
 
