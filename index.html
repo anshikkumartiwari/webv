@@ -47,15 +47,15 @@
             font-size: 1.5rem;
             color: #e0e0e0;
             margin-top: 2rem;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem; /* Consistent spacing for all headings */
             text-align: left;
             width: 100%;
             max-width: 600px;
             padding-left: 0.2rem;
         }
-         .commands-group > .subheading:first-of-type {
-             margin-top: 0;
-         }
+        .commands-group > .subheading:first-of-type {
+            margin-top: 0;
+        }
 
         .commands-group {
             display: flex;
@@ -93,7 +93,7 @@
             color: #d0d0d0;
         }
 
-        .cmd-box .copy-icon {
+        .copy-icon {
             width: 1.1rem;
             height: 1.1rem;
             position: absolute;
@@ -101,18 +101,15 @@
             right: 1rem;
             cursor: pointer;
             fill: #a0a0a0;
-            transition: fill 0.2s ease, transform 0.15s ease;
+            transition: fill 0.2s ease;
         }
+        
         .cmd-box:hover .copy-icon {
            fill: #e0e0e0;
         }
-        .copy-icon.copied {
-           fill: #bb86fc;
-           transform: scale(0.9);
-        }
-
+        
         .screenshot {
-            margin: 2.5rem 0;
+            margin: 1rem 0; /* Match spacing with cmd boxes */
             padding: 0.5rem;
             background-color: #1e1e1e;
             border: 1px solid #333;
@@ -201,6 +198,7 @@
             transition: background 0.2s, transform 0.2s;
             width: 100%;
             max-width: 600px;
+            margin-top: 1rem; /* Consistent spacing */
         }
         
         .github-box:hover {
@@ -261,13 +259,13 @@ sudo apt install webv</pre>
                 <pre>webv what's the weather today</pre>
                 <svg class="copy-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
             </div>
-             <div class="cmd-box" data-cmd="webv">
+            <div class="cmd-box" data-cmd="webv">
                 <pre>webv</pre>
                 <svg class="copy-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
             </div>
         </div>
-            <h2 class="subheading">Screenshot</h2>
-
+        
+        <h2 class="subheading">Screenshot</h2>
         <div class="screenshot">
             <img src="https://raw.githubusercontent.com/anshikkumartiwari/webv/main/annotely_image%20(1).png" alt="webv in action">
         </div>
@@ -297,16 +295,20 @@ sudo apt install webv</pre>
         document.querySelectorAll('.copy-icon').forEach(icon => {
             icon.addEventListener('click', e => {
                 e.stopPropagation();
-                const targetIcon = e.currentTarget;
-                if (targetIcon.classList.contains('copied')) {
-                    return;
-                }
-                const cmd = targetIcon.closest('.cmd-box').getAttribute('data-cmd');
+                const copyIcon = e.currentTarget;
+                const cmdBox = copyIcon.closest('.cmd-box');
+                const cmd = cmdBox.getAttribute('data-cmd');
+                
+                // Change the path of the SVG to a check mark
+                copyIcon.innerHTML = '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>';
+                copyIcon.style.fill = '#bb86fc'; // Change to purple color
+                
                 navigator.clipboard.writeText(cmd).then(() => {
-                    targetIcon.classList.add('copied');
+                    // After 1.5 seconds, change back to the copy icon
                     setTimeout(() => {
-                         targetIcon.classList.remove('copied');
-                    }, 1200);
+                        copyIcon.innerHTML = '<path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>';
+                        copyIcon.style.fill = ''; // Reset to default color
+                    }, 1500);
                 }).catch(err => {
                     console.error('Failed to copy text: ', err);
                 });
