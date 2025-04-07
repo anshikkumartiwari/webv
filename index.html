@@ -124,12 +124,45 @@
             display: block;
             border-radius: 4px;
         }
+        .github-box {
+            cursor: pointer;
+            justify-content: center;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .github-box:hover {
+            background: #2a2a2a;
+            transform: scale(0.98);
+        }
+        
+        .github-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: #d0d0d0;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .github-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            fill: #d0d0d0;
+            transition: fill 0.2s ease;
+        }
+        
+        .github-box:hover .github-icon {
+            fill: #bb86fc;
+        }
+
 
         footer {
             text-align: center;
             padding: 1.5rem 0;
             font-size: 0.9rem;
-            color: #888;
+            color: white;
             margin-top: 2rem;
         }
     </style>
@@ -137,7 +170,7 @@
 <body>
     <div class="container">
         <h1>webv</h1>
-        <p>Minimal Terminal-to-GUI Web Launcher for any Debian based Operating System (Ubuntu, Kali Linux, Raspberry Pi OS, MX Linux, Parrot OS).</p>
+        <p>Minimal Terminal-to-GUI Web Launcher </br> for any Debian based Operating System (Ubuntu, Kali Linux, Raspberry Pi OS, MX Linux, Parrot OS).</p>
 
         <div class="commands-group">
             <h2 class="subheading">Installation</h2>
@@ -166,6 +199,18 @@ sudo apt install webv</pre>
         <div class="screenshot">
             <img src="https://raw.githubusercontent.com/anshikkumartiwari/webv/main/annotely_image%20(1).png" alt="webv in action">
         </div>
+        
+        <div class="cmd-box github-box" onclick="window.open('https://github.com/anshikkumartiwari/webv', '_blank')">
+            <div class="github-content">
+                <svg class="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="#d0d0d0" d="M12 0C5.37 0 0 5.37 0 12a12 12 0 008.21 11.43c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.1-.76.08-.75.08-.75 1.21.09 1.84 1.24 1.84 1.24 1.08 1.84 2.83 1.31 3.52 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.97 0-1.32.47-2.4 1.24-3.25-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.85 1.24 1.93 1.24 3.25 0 4.64-2.81 5.66-5.49 5.96.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58A12 12 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                <span>View on GitHub</span>
+            </div>
+        </div>
+
+
+        
     </div>
 
     <footer>
