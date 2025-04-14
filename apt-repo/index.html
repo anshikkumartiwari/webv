@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>webv — Minimal Terminal-to-GUI Web Launcher</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #121212;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        a { color: #bb86fc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: auto;
+            padding: 2rem 1rem;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            color: #b0b0b0;
+        }
+
+        .subheading {
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            margin-top: 2rem;
+            text-align: left;
+            width: 100%;
+            max-width: 600px;
+            padding-left: 0.2rem;
+        }
+        .commands-group > .subheading:first-of-type {
+            margin-top: 0;
+        }
+
+        .commands-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .cmd-box {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1.2rem;
+            padding-right: 3.5rem;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.95rem;
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+        }
+
+        .cmd-box:hover {
+            background: #2a2a2a;
+            border-color: #555;
+        }
+
+        .cmd-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #d0d0d0;
+        }
+
+        .copy-icon {
+            width: 1.1rem;
+            height: 1.1rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            fill: #a0a0a0;
+            transition: fill 0.2s ease;
+        }
+        
+        .cmd-box:hover .copy-icon {
+           fill: #e0e0e0;
+        }
+        
+        .screenshot {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            display: inline-block;
+            width: 100%;
+            max-width: 600px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot:hover {
+            transform: scale(0.99);
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            display: block;
+            border-radius: 4px;
+        }
+        
+        .image-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .image-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup-image-container {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .popup-image {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .close-button {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: background-color 0.2s ease;
+        }
+        
+        .close-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .github-box {
+            cursor: pointer;
+            justify-content: center;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            transition: background 0.2s, transform 0.2s;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 1rem;
+        }
+        
+        .github-box:hover {
+            background: #2a2a2a;
+            transform: scale(0.98);
+        }
+        
+        .github-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: #d0d0d0;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .github-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            fill: #d0d0d0;
+            transition: fill 0.2s ease;
+        }
+        
+        .github-box:hover .github-icon {
+            fill: #bb86fc;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            font-size: 0.9rem;
+            color: white;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>webv</h1>
+        <p>Minimal Terminal-to-GUI Web Launcher </br> for any Debian based Operating System (Ubuntu, Kali Linux, Raspberry Pi OS, MX Linux, Parrot OS).</p>
+
+        <div class="commands-group">
+            <h2 class="subheading">Installation</h2>
+            <div class="cmd-box install-box" data-cmd="echo &quot;deb [trusted=yes] https://anshikkumartiwari.github.io/webv stable main&quot; | sudo tee /etc/apt/sources.list.d/webv.list && sudo apt update && sudo apt install webv">
+                <pre>echo "deb [trusted=yes] https://anshikkumartiwari.github.io/webv stable main" | sudo tee /etc/apt/sources.list.d/webv.list </br>
+sudo apt update
+sudo apt install webv</pre>
+                <svg class="copy-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            </div>
+
+            <h2 class="subheading">Usage</h2>
+            <div class="cmd-box" data-cmd="webv https://wikipedia.org">
+                <pre>webv https://wikipedia.org</pre>
+                <svg class="copy-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            </div>
+            <div class="cmd-box" data-cmd="webv what's the weather today">
+                <pre>webv what's the weather today</pre>
+                <svg class="copy-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            </div>
+            <div class="cmd-box" data-cmd="webv">
+                <pre>webv</pre>
+                <svg class="copy-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            </div>
+        </div>
+        
+        <h2 class="subheading">Screenshot</h2>
+        <div class="screenshot">
+            <img src="https://raw.githubusercontent.com/anshikkumartiwari/webv/main/annotely_image%20(1).png" alt="webv in action">
+        </div>
+        
+        <div class="cmd-box github-box" onclick="window.open('https://github.com/anshikkumartiwari/webv', '_blank')">
+            <div class="github-content">
+                <svg class="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="#d0d0d0" d="M12 0C5.37 0 0 5.37 0 12a12 12 0 008.21 11.43c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.1-.76.08-.75.08-.75 1.21.09 1.84 1.24 1.84 1.24 1.08 1.84 2.83 1.31 3.52 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.97 0-1.32.47-2.4 1.24-3.25-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.85 1.24 1.93 1.24 3.25 0 4.64-2.81 5.66-5.49 5.96.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58A12 12 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                <span>View on GitHub</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="image-popup-overlay" id="imagePopup">
+        <div class="popup-image-container">
+            <button class="close-button">&times;</button>
+            <img class="popup-image" src="" alt="webv in action (enlarged)">
+        </div>
+    </div>
+
+    <footer>
+        &copy; <a href="https://anshikkumartiwari.github.io">Anshik Kumar Tiwari</a>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.copy-icon').forEach(icon => {
+            icon.addEventListener('click', e => {
+                e.stopPropagation();
+                const copyIcon = e.currentTarget;
+                const cmdBox = copyIcon.closest('.cmd-box');
+                const cmd = cmdBox.getAttribute('data-cmd');
+                
+                copyIcon.innerHTML = '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>';
+                copyIcon.style.fill = '#bb86fc';
+                
+                navigator.clipboard.writeText(cmd).then(() => {
+                    setTimeout(() => {
+                        copyIcon.innerHTML = '<path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>';
+                        copyIcon.style.fill = '';
+                    }, 1500);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            });
+        });
+        
+        const screenshot = document.querySelector('.screenshot');
+        const popup = document.getElementById('imagePopup');
+        const popupImage = document.querySelector('.popup-image');
+        const closeButton = document.querySelector('.close-button');
+        
+        screenshot.addEventListener('click', () => {
+            const imgSrc = screenshot.querySelector('img').src;
+            popupImage.src = imgSrc;
+            popup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeButton.addEventListener('click', () => {
+            popup.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        popup.addEventListener('click', (e) => {
+            if (e.target === popup) {
+                popup.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && popup.classList.contains('active')) {
+                popup.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+</body>
+</html>
