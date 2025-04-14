@@ -12,7 +12,7 @@ You can install `webv` directly from the custom APT repo.
 Run the following commands:
 
 ```bash
-echo "deb [trusted=yes] https://anshikkumartiwari.github.io/webv stable main" | sudo tee /etc/apt/sources.list.d/webv.list
+echo "deb [trusted=yes] https://anshikkumartiwari.github.io/webv/apt-repo stable main" | sudo tee /etc/apt/sources.list.d/webv.list
 sudo apt update
 sudo apt install webv
 ```
