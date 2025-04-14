@@ -1,0 +1,7 @@
+webv (1.0.0-1) unstable; urgency=low
+
+  * Initial release. A minimal terminal-to-GUI web launcher using GTK3 and WebKitGTK 4.1.
+  * Supports URL launching and fallback to Google search.
+  * Implements basic navigation shortcuts (back, forward, reload, info).
+
+ -- Anshik Kumar Tiwari <your.email@example.com>  Sat, 15 Apr 2025 18:00:00 +0000

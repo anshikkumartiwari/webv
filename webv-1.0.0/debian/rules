@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+# Uncomment the next line to enable verbose output.
+# export DH_VERBOSE = 1
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	# No configure step is needed for this simple package
+
+override_dh_auto_build:
+	$(MAKE)

@@ -1,0 +1,51 @@
+# Compiled binary
+webv
+*.o
+*.ko
+*.obj
+*.elf
+
+# Debian package build artifacts
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/*.debhelper.log
+debian/*.substvars
+debian/files
+debian/webv/
+debian/*.debhelper
+debian/tmp/
+debian/*.ex
+debian/*.EX
+
+# Compressed files
+*.tar.gz
+*.tar.xz
+*.tar.bz2
+*.deb
+
+# Editor and OS specific files
+*~
+.*.swp
+.DS_Store
+*.Zone.Identifier
+
+# Build directories
+build/
+obj-*/
+
+# Backup files
+*.bak
+*.backup
+*.orig
+*.patch
+*.rej
+
+# Local configuration
+.vscode/
+.idea/
+
+# Other common files to ignore
+core
+core.*
+vgcore.*
+*.log
